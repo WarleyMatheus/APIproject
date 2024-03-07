@@ -18,14 +18,20 @@ public class Controller {
     @Autowired
     private repositorio acao;
     
+    @SuppressWarnings("null")
     @PostMapping("/api")
     public Pessoa cadastrar(@RequestBody Pessoa obj){
         return acao.save(obj);
     }
+    
+    @GetMapping("/api/{codigo}")
+    public Pessoa selecionarPeloCodigo(@PathVariable int codigo){
+        return acao.findByCodigo(codigo);
+    }
 
     @GetMapping("/api")
     public List<Pessoa> selecionar(){
-        return acao.findALL();
+        return acao.findAll();
     }
 
     @GetMapping("") //responsável por criar as rotas
