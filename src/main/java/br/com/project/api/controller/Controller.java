@@ -20,6 +20,7 @@ public class Controller {
     @Autowired
     private repositorio acao;
 
+    @SuppressWarnings("null")
     @DeleteMapping("/api/{codigo}")
     public void remover(@PathVariable int codigo){
         Pessoa obj = selecionarPeloCodigo(codigo);
@@ -31,7 +32,8 @@ public class Controller {
     public Pessoa cadastrar(@RequestBody Pessoa obj){
         return acao.save(obj);
     }
-
+    
+    @SuppressWarnings("null")
     @PutMapping("/api")
     public Pessoa editar(@RequestBody Pessoa obj){
         return acao.save(obj);
