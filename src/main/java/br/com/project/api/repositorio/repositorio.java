@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import br.com.project.api.modelo.Pessoa;
 
 @Repository
-public interface repositorio extends CrudRepository<Pessoa, Integer> {
+public interface Repositorio extends CrudRepository<Pessoa, Integer> {
 
     @SuppressWarnings("null")
     List<Pessoa> findAll();
@@ -30,5 +30,7 @@ public interface repositorio extends CrudRepository<Pessoa, Integer> {
 
     @Query(value = "SELECT * FROM pessoas WHERE idade >= :idade", nativeQuery = true)
     List<Pessoa> idadeMaiorIgual(int idade);
+
+    int countByCodigo(int codigo);
 
 }

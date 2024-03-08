@@ -13,20 +13,24 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.project.api.modelo.Client;
 import br.com.project.api.modelo.Pessoa;
-import br.com.project.api.repositorio.repositorio;
+import br.com.project.api.repositorio.Repositorio;
+import br.com.project.api.servico.Servico;
+import jakarta.validation.Valid;
 
 @RestController //Define a classe como uma classe de controle
 public class Controller {
     
     @Autowired
-    private repositorio acao;
+    private Repositorio acao;
 
-    @SuppressWarnings("null")
+    @Autowired
+    private Servico servico;
+
     @DeleteMapping("/api/{codigo}")
-    public void remover(@PathVariable int codigo){
-        Pessoa obj = selecionarPeloCodigo(codigo);
-        acao.delete(obj);
+    public ResponseEntity<?> remover(@PathVariable int codigo){
+        return servico.remover(codigo);
     }
 
     @GetMapping("/api/iniciaCom")
@@ -69,26 +73,24 @@ public class Controller {
         return acao.count();
     }
     
-    @SuppressWarnings("null")
     @PostMapping("/api")
-    public Pessoa cadastrar(@RequestBody Pessoa obj){
-        return acao.save(obj);
+    public ResponseEntity<?> cadastrar(@RequestBody Pessoa obj){
+        return servico.cadastrar(obj);
     }
     
-    @SuppressWarnings("null")
     @PutMapping("/api")
-    public Pessoa editar(@RequestBody Pessoa obj){
-        return acao.save(obj);
+    public ResponseEntity<?> editar(@RequestBody Pessoa obj){
+        return servico.editar(obj);
     }
     
     @GetMapping("/api/{codigo}")
-    public Pessoa selecionarPeloCodigo(@PathVariable int codigo){
-        return acao.findByCodigo(codigo);
+    public ResponseEntity<?> selecionarPeloCodigo(@PathVariable int codigo){
+        return servico.selecionarPeloCodigo(codigo);
     }
-
+    
     @GetMapping("/api")
-    public List<Pessoa> selecionar(){
-        return acao.findAll();
+    public ResponseEntity<?> selecionar(){
+        return servico.selecionar();
     }
 
     @GetMapping("") //responsável por criar as rotas
@@ -114,5 +116,10 @@ public class Controller {
     @GetMapping("/status")
     public ResponseEntity<?> status(){
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @PostMapping("/cliente")
+    public void client(@Valid @RequestBody Client obj){
+
     }
 }
